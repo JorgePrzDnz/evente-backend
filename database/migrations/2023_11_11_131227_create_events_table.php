@@ -18,6 +18,7 @@ return new class extends Migration
             $table->json('media')->nullable();
             $table->dateTime('start_at');
             $table->dateTime('published_at');
+            $table->foreignId('category_id')->references('id')->on('categories');
             $table->timestamps();
         });
     }

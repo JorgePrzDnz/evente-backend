@@ -10,6 +10,7 @@ use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -46,7 +47,11 @@ class EventResource extends Resource
                         ->label('Comienzo del evento'),
                     FileUpload::make('media')
                         ->multiple()
-                        ->image()
+                        ->image(),
+                    Select::make('category_id')
+                        ->relationship('category','name')
+                        ->label('Categoría')
+                        ->required(),
                 ])
             ]);
     }
@@ -57,7 +62,9 @@ class EventResource extends Resource
             ->columns([
                 TextColumn::make('name')
                 ->searchable()
-                ->label('Título')
+                ->label('Título'),
+                TextColumn::make('category.name')
+                ->label('Categoría'),
             ])
             ->filters([
                 //
