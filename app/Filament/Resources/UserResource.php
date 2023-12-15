@@ -30,6 +30,7 @@ class UserResource extends Resource
             ->schema([
                 Section::make()->schema([
                     TextInput::make('name'),
+                    TextInput::make('surname'),
                     TextInput::make('email'),
                     TextInput::make('password')->password(),
                 ])

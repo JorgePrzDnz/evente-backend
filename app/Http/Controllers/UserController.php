@@ -8,7 +8,8 @@ class UserController extends Controller
 {
     public function getProfile(){
         return response()->json([
-            "user" => auth()->user()
+            'status' => true,
+            'user' => auth()->user()
         ]);
     }
 }
