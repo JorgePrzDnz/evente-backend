@@ -2,31 +2,33 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\EventResource\Pages;
-use App\Filament\Resources\EventResource\RelationManagers;
-use App\Models\Event;
+use App\Filament\Resources\PostResource\Pages;
+use App\Filament\Resources\PostResource\RelationManagers;
+use App\Models\Post;
 use Filament\Forms;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
 
-class EventResource extends Resource
+class PostResource extends Resource
 {
-    protected static ?string $model = Event::class;
+    protected static ?string $model = Post::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-ticket';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    protected static ?string $label = 'Evento';
+    protected static ?string $label = 'Publicación';
 
-    protected static ?string $pluralLabel = 'Eventos';
+    protected static ?string $pluralLabel = 'Publicaciones';
 
     public static function form(Form $form): Form
     {
@@ -39,25 +41,11 @@ class EventResource extends Resource
                     RichEditor::make('description')
                         ->required()
                         ->label('Descripción'),
-                    TextInput::make('place')
-                        ->required()
-                        ->label('Lugar'),
-                    TextInput::make('price')
-                        ->required()
-                        ->label('Precio'),
                     DateTimePicker::make('published_at')
                         ->required()
                         ->label('Fecha de publicación'),
-                    DateTimePicker::make('start_at')
-                        ->required()
-                        ->label('Comienzo del evento'),
                     FileUpload::make('media')
-                        ->multiple()
                         ->image(),
-                    Select::make('category_id')
-                        ->relationship('category','name')
-                        ->label('Categoría')
-                        ->required(),
                 ])
             ]);
     }
@@ -69,8 +57,9 @@ class EventResource extends Resource
                 TextColumn::make('name')
                 ->searchable()
                 ->label('Título'),
-                TextColumn::make('category.name')
-                ->label('Categoría'),
+                TextColumn::make('published_at')
+                ->searchable()
+                ->label('Fecha publicado'),
             ])
             ->filters([
                 //
@@ -98,9 +87,9 @@ class EventResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListEvents::route('/'),
-            'create' => Pages\CreateEvent::route('/create'),
-            'edit' => Pages\EditEvent::route('/{record}/edit'),
+            'index' => Pages\ListPosts::route('/'),
+            'create' => Pages\CreatePost::route('/create'),
+            'edit' => Pages\EditPost::route('/{record}/edit'),
         ];
     }
 }

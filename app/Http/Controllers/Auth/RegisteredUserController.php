@@ -40,7 +40,6 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         return response()->json([
-            'status' => true,
             'user' => $user,
             'token' => $token,
         ]);

@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,5 +22,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/events',[EventController::class, 'index']);
+Route::get('/events/category/{category_id}',[EventController::class, 'eventsByCategory']);
+Route::get('/posts',[PostController::class, 'index']);
+Route::put('/profile/edit', [UserController::class, 'updateProfile'])
+                ->middleware('auth:sanctum');
 
 require __DIR__.'/auth.php';

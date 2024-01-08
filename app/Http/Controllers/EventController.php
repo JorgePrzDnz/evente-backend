@@ -12,4 +12,9 @@ class EventController extends Controller
         $events = Event::paginate(10);
         return response()->json(['events' => $events]);
     }
+
+    public function eventsByCategory($category_id){
+        $events = Event::where('category_id', $category_id)->paginate(10);
+        return response()->json(['events' => $events]);
+    }
 }
