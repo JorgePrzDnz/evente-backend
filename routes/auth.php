@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PaymentMethodController;
 
 Route::post('/register', [RegisteredUserController::class, 'store'])
                 ->middleware('guest')
@@ -17,8 +18,15 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store'])
                 ->middleware('guest')
                 ->name('login');
 
-Route::get('profile', [UserController::class, 'getProfile'])
+Route::get('/profile', [UserController::class, 'getProfile'])
                 ->middleware('auth:sanctum');
+
+Route::get('/paymentMethod', [UserController::class, 'getPaymentMethod'])
+                ->middleware('auth:sanctum');
+
+Route::post('/paymentMethod/create', [PaymentMethodController::class, 'store'])
+                ->middleware('guest')
+                ->name('login');
 
 Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
                 ->middleware('guest')

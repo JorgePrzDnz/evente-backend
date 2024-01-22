@@ -12,9 +12,16 @@ use Illuminate\Validation\Rules\Password;
 class UserController extends Controller
 {
     public function getProfile(){
+
         return response()->json([
             'status' => true,
-            'user' => auth()->user()
+            'user' => auth()->user(),
+        ]);
+    }
+
+    public function getPaymentMethod(){
+        return response()->json([
+            'paymentMethod' => auth()->user()->paymentMethod,
         ]);
     }
 

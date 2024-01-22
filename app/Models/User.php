@@ -53,4 +53,9 @@ class User extends Authenticatable implements FilamentUser
         // dd($this, $this->role, (Role::ADMIN)->value);
         return $this->role === (Role::ADMIN)->value;
     }
+
+    public function paymentMethod(){
+
+        return $this->hasOne('App\Models\PaymentMethod');
+    }
 }

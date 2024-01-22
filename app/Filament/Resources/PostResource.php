@@ -40,11 +40,13 @@ class PostResource extends Resource
                         ->label('Título'),
                     RichEditor::make('description')
                         ->required()
-                        ->label('Descripción'),
+                        ->label('Descripción')
+                        ->maxLength(257),
                     DateTimePicker::make('published_at')
                         ->required()
                         ->label('Fecha de publicación'),
                     FileUpload::make('media')
+                        ->multiple()
                         ->image(),
                 ])
             ]);
