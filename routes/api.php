@@ -22,8 +22,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/events',[EventController::class, 'index']);
+Route::get('/events/{eventId}',[EventController::class, 'getEventById']);
 Route::get('/events/category/{category_id}',[EventController::class, 'eventsByCategory']);
 Route::get('/posts',[PostController::class, 'index']);
+Route::post('/post/like/{postId}', [\App\Http\Controllers\PostController::class, 'likePost'])
+    ->middleware('auth:sanctum');
+Route::delete('/post/unlike/{postId}', [\App\Http\Controllers\PostController::class, 'unlikePost'])
+    ->middleware('auth:sanctum');
+Route::get('/likedPosts', [UserController::class, 'getLikedPosts'])
+    ->middleware('auth:sanctum');
 Route::put('/profile/edit', [UserController::class, 'updateProfile'])
                 ->middleware('auth:sanctum');
 

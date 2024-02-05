@@ -20,9 +20,18 @@ class PaymentMethodController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $paymentMethod = $request->json()->all();
+        $user_id = auth()->user()->id;
+        return PaymentMethod::create([
+            'ownerName' => $paymentMethod['ownerName'],
+            'cardNumber' => $paymentMethod['cardNumber'],
+            'expiryDate' => $paymentMethod['expiryDate'],
+            'bank' => $paymentMethod['bank'],
+            'user_id' => $user_id,
+        ]);
+
     }
 
     /**
@@ -52,9 +61,41 @@ class PaymentMethodController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PaymentMethod $paymentMethod)
+    public function update(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'ownerName' => 'sometimes|nullable',
+            'cardNumber' => 'sometimes|nullable',
+            'expiryDate' => 'sometimes', 'nullable',
+            'bank' => 'sometimes|nullable',
+        ]);
+
+        $data = [];
+
+        if ($request['ownerName']) {
+            $data['ownerName'] = $request['ownerName'];
+        }
+
+        if ($request['cardNumber']) {
+            $data['cardNumber'] = $request['cardNumber'];
+        }
+
+        if ($request->expiryDate) {
+            $data['expiryDate'] = $request['expiryDate'];
+        }
+
+        if ($request->bank) {
+            $data['bank'] = $request['bank'];
+        }
+
+        if (! empty($data)) {
+            auth()->user()->paymentMethod->update($data);
+        }
+
+        return response()->json([
+            'status' => true,
+            'paymentMethod' => auth()->user()->paymentMethod,
+        ]);
     }
 
     /**
@@ -62,6 +103,11 @@ class PaymentMethodController extends Controller
      */
     public function destroy(PaymentMethod $paymentMethod)
     {
-        //
+        if(auth()->user()->paymentMethod != null){
+            $user_payment_method = auth()->user()->paymentMethod->delete();
+        }
+        return response()->json([
+            'status' => true,
+        ]);
     }
 }

@@ -56,4 +56,15 @@ class UserController extends Controller
             'profile' => auth()->user(),
         ]);
     }
+
+    public function getLikedPosts()
+    {
+        return response()->json([
+            'status' => true,
+            'posts_liked' => auth()->user()
+                                    ->liked_posts()
+                                    ->orderByDesc('published_at')
+                                    ->get(),
+        ]);
+    }
 }

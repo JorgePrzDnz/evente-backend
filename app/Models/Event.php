@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class Event extends Model
 {
@@ -19,7 +20,8 @@ class Event extends Model
     ];
 
     protected $appends = [
-        'images_url'
+        'images_url',
+        'published_at_formatted'
     ];
 
     protected function imagesUrl(): Attribute
@@ -33,5 +35,14 @@ class Event extends Model
 
     public function category(){
         return $this->belongsTo('App\Models\Category');
+    }
+
+    protected function publishedAtFormatted(): Attribute
+    {
+        return Attribute::make(
+            get: function (){
+                return Carbon::parse($this->published_at)->format('d/m/Y H:i');
+            }
+        );
     }
 }

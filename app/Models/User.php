@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\User;
 
 class User extends Authenticatable implements FilamentUser
 {
@@ -57,5 +58,10 @@ class User extends Authenticatable implements FilamentUser
     public function paymentMethod(){
 
         return $this->hasOne('App\Models\PaymentMethod');
+    }
+
+    public function liked_posts()
+    {
+        return $this->belongsToMany(Post::class);
     }
 }

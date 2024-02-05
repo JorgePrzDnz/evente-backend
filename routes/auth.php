@@ -24,9 +24,14 @@ Route::get('/profile', [UserController::class, 'getProfile'])
 Route::get('/paymentMethod', [UserController::class, 'getPaymentMethod'])
                 ->middleware('auth:sanctum');
 
-Route::post('/paymentMethod/create', [PaymentMethodController::class, 'store'])
-                ->middleware('guest')
-                ->name('login');
+Route::post('/paymentMethod/create', [PaymentMethodController::class, 'create'])
+                ->middleware('auth:sanctum');
+
+Route::put('/paymentMethod/update', [PaymentMethodController::class, 'update'])
+                ->middleware('auth:sanctum');
+
+Route::post('/paymentMethod/delete', [PaymentMethodController::class, 'destroy'])
+                ->middleware('auth:sanctum');
 
 Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
                 ->middleware('guest')

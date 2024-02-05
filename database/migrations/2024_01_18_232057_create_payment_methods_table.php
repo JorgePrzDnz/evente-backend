@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('payment_methods', function (Blueprint $table) {
             $table->id();
             $table->string('ownerName');
-            $table->integer('cardNumber');
+            $table->bigInteger('cardNumber');
             $table->string('expiryDate');
             $table->string('bank');
             $table->foreignId('user_id')->references('id')->on('users');

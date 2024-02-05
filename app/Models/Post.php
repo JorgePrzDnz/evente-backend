@@ -20,7 +20,8 @@ class Post extends Model
 
     protected $appends = [
         'images_url',
-        'published_at_formatted'
+        'published_at_formatted',
+        'is_liked',
     ];
 
     protected function imagesUrl(): Attribute
@@ -39,5 +40,15 @@ class Post extends Model
                 return Carbon::parse($this->published_at)->format('d/m/Y');
             }
         );
+    }
+
+    public function getIsLikedAttribute()
+    {
+        return $this->users_likes->where('id', auth('sanctum')->id())->isNotEmpty();
+    }
+
+    public function users_likes()
+    {
+        return $this->belongsToMany(User::class);
     }
 }

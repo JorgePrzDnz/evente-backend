@@ -13,6 +13,14 @@ class EventController extends Controller
         return response()->json(['events' => $events]);
     }
 
+    public function getEventById($eventId)
+    {
+        $event = Event::findOrFail($eventId);
+        return response()->json([
+            'event' => $event,
+        ]);
+    }
+
     public function eventsByCategory($category_id){
         $events = Event::where('category_id', $category_id)->paginate(10);
         return response()->json(['events' => $events]);
