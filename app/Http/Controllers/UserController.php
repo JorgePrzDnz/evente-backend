@@ -67,4 +67,15 @@ class UserController extends Controller
                                     ->get(),
         ]);
     }
+
+    public function getOrders()
+    {
+        return response()->json([
+            'status' => true,
+            'orders' => auth()->user()
+                        ->orders()
+                        ->orderByDesc('created_at')
+                        ->get(),
+        ]);
+    }
 }

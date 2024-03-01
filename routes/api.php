@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/events',[EventController::class, 'index']);
+Route::get('/getAllEvents/{category_id}',[EventController::class, 'getAllByCategory']);
 Route::get('/events/{eventId}',[EventController::class, 'getEventById']);
 Route::get('/events/category/{category_id}',[EventController::class, 'eventsByCategory']);
 Route::get('/posts',[PostController::class, 'index']);
@@ -30,6 +32,10 @@ Route::post('/post/like/{postId}', [\App\Http\Controllers\PostController::class,
 Route::delete('/post/unlike/{postId}', [\App\Http\Controllers\PostController::class, 'unlikePost'])
     ->middleware('auth:sanctum');
 Route::get('/likedPosts', [UserController::class, 'getLikedPosts'])
+    ->middleware('auth:sanctum');
+Route::post('/makeAnOrder', [OrderController::class, 'create'])
+    ->middleware('auth:sanctum');
+Route::get('/orders', [UserController::class, 'getOrders'])
     ->middleware('auth:sanctum');
 Route::put('/profile/edit', [UserController::class, 'updateProfile'])
                 ->middleware('auth:sanctum');

@@ -64,4 +64,9 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->belongsToMany(Post::class);
     }
+
+    public function orders()
+    {
+        return $this->hasMany('App\Models\Order');
+    }
 }

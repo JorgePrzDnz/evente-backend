@@ -21,7 +21,7 @@ class Event extends Model
 
     protected $appends = [
         'images_url',
-        'published_at_formatted'
+        'published_at_formatted',
     ];
 
     protected function imagesUrl(): Attribute
@@ -41,7 +41,7 @@ class Event extends Model
     {
         return Attribute::make(
             get: function (){
-                return Carbon::parse($this->published_at)->format('d/m/Y H:i');
+                return Carbon::parse($this->start_at)->format('d/m/Y H:i');
             }
         );
     }
