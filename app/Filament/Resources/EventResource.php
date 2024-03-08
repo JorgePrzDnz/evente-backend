@@ -70,6 +70,7 @@ class EventResource extends Resource
                 ->searchable()
                 ->label('Título'),
                 TextColumn::make('category.name')
+                ->searchable()
                 ->label('Categoría'),
             ])
             ->filters([
